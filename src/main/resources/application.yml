@@ -1,0 +1,27 @@
+spring:
+#  sql:
+#    init:
+#      mode: always
+  application:
+    name: product-administration
+  datasource:
+    url: jdbc:postgresql://db-adm-products:5432/PRODADM
+    username: ADMIN
+    password: postgres
+  jpa:
+    openInView: true
+    hibernate:
+      ddl-auto: update #| create-drop | update | validate | none>
+      generate-ddl: true
+    properties:
+      hibernate:
+        jdbc.lob.non_contextual_creation: true
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc.batch_size: 10
+        order_updates: true
+        batch_versioned_data: true
+  docker:
+    compose:
+      enabled: true

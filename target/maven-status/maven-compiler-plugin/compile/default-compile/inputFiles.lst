@@ -1,0 +1,7 @@
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/repositories/CategoryRepository.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/model/dto/CategoryDTO.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/controllers/CategoryController.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/model/Category.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/services/CategoryServiceImpl.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/ProductAdministrationApplication.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/services/CategoryService.java

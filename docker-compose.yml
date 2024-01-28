@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  db-adm-products:
+    container_name: db-adm-products
+    image: 'postgres:16.0'
+    restart: unless-stopped
+#    env_file:
+#      - ./.env
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=PRODADM
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-adm-products
+    healthcheck:
+      test: [ "CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app-adm-products:
+    container_name: app-adm-products
+    depends_on:
+      db-adm-products:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-adm-products:5432/PRODADM
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    volumes:
+      - "./src:/build/src"
+      - "./target:/build/target:cached"
+    command: "mvn spring-boot:run"
+    ports:
+      - 6868:8080
+    networks:
+      - app-adm-products
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 1024m
+
+volumes:
+  pgdata: {}
+
+networks:
+  app-adm-products:
+    driver: bridge
+
