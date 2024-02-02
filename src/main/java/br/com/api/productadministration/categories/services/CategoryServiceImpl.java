@@ -1,9 +1,10 @@
 package br.com.api.productadministration.categories.services;
 
 
-import br.com.api.productadministration.categories.model.Category;
+import br.com.api.productadministration.categories.mapper.CategoryMapper;
 import br.com.api.productadministration.categories.model.dto.CategoryDTO;
 import br.com.api.productadministration.categories.repositories.CategoryRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,32 +15,16 @@ import java.util.List;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CategoryServiceImpl implements CategoryService {
 
+  @Autowired
+  private CategoryMapper mapper;
 
   @Autowired
   private CategoryRepository repository;
 
   @Override
+  @Transactional
   public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-    Category category = mapperToModel(categoryDTO);
-    Category createdCategory = repository.save(category);
-    return mapperToDTO(createdCategory);
-  }
-
-  private Category mapperToModel(CategoryDTO categoryDTO) {
-    return new Category().builder()
-            .id(categoryDTO.id())
-            .name(categoryDTO.name())
-            .active(categoryDTO.active())
-            .type(categoryDTO.type())
-            .build();
-  }
-  private CategoryDTO mapperToDTO(Category category) {
-    return new CategoryDTO.Builder()
-            .id(category.getId())
-            .name(category.getName())
-            .active(category.getActive())
-            .type(category.getType())
-            .build();
+    return mapper.ToDTO(repository.save(mapper.ToModel(categoryDTO)));
   }
 
   @Override
@@ -51,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
   public List<CategoryDTO> getAll() {
     return repository.findAll()
             .stream()
-            .map(this::mapperToDTO)
+            .map(obj -> mapper.ToDTO(obj))
             .toList();
   }
 
@@ -64,4 +49,6 @@ public class CategoryServiceImpl implements CategoryService {
   public void delete(Long id) {
 
   }
+
+
 }

@@ -1,1 +1,4 @@
+br/com/api/productadministration/categories/CategoryIntegrationTest.class
+br/com/api/productadministration/TestContainersConfig.class
+br/com/api/productadministration/TestApplication.class
 br/com/api/productadministration/ProductAdministrationApplicationTests.class

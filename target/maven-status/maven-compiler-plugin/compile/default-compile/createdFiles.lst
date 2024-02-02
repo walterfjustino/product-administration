@@ -1,10 +1,11 @@
-br/com/api/productadministration/ProductAdministrationApplication.class
 br/com/api/productadministration/categories/services/CategoryServiceImpl.class
-br/com/api/productadministration/categories/model/dto/CategoryDTO$Builder.class
-br/com/api/productadministration/categories/model/dto/CategoryDTO.class
 br/com/api/productadministration/categories/model/Category$CategoryBuilder.class
 br/com/api/productadministration/categories/repositories/CategoryRepository.class
 br/com/api/productadministration/categories/services/CategoryService.class
 br/com/api/productadministration/categories/model/dto/CategoryDTO$CategoryDTOBuilder.class
 br/com/api/productadministration/categories/controllers/CategoryController.class
+br/com/api/productadministration/ProductAdministrationApplication.class
+br/com/api/productadministration/categories/model/dto/CategoryDTO$Builder.class
+br/com/api/productadministration/categories/mapper/CategoryMapper.class
+br/com/api/productadministration/categories/model/dto/CategoryDTO.class
 br/com/api/productadministration/categories/model/Category.class

@@ -7,7 +7,6 @@ import lombok.Builder;
 
 @Builder
 public record CategoryDTO(
-        @JsonIgnore
         Long id,
         @NotNull
         @Size(min = 3, max = 200, message = "Maximum of characters permited exceed of the the limit")

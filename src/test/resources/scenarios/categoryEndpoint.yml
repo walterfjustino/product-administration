@@ -1,0 +1,32 @@
+shouldBeCreateCategory:
+  input: >-
+    {
+        "id": 4,
+        "name": "Brinquedos",
+        "active": true,
+        "type": "NORMAL"
+    }
+
+shouldBeReturnCategories:
+  input: >-
+    [
+      {
+        "id": 1,
+        "name": "Monitores",
+        "active": true,
+        "type": "NORMAL"
+      },
+      {
+        "id": 2,
+        "name": "Tvs",
+        "active": true,
+        "type": "NORMAL"
+      },
+      {
+        "id": 3,
+        "name": "Celulares",
+        "active": true,
+        "type": "NORMAL"
+      }
+    ]
+

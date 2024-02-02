@@ -1,7 +1,4 @@
 spring:
-#  sql:
-#    init:
-#      mode: always
   application:
     name: product-administration
   datasource:
@@ -22,6 +19,9 @@ spring:
         jdbc.batch_size: 10
         order_updates: true
         batch_versioned_data: true
+  sql:
+    init:
+      mode: always
   docker:
     compose:
       enabled: true
