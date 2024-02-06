@@ -1,10 +1,12 @@
 package br.com.api.productadministration.configuration;
 
-import br.com.api.productadministration.categories.CategoryIntegrationTest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
+
+import br.com.api.productadministration.categories.CategoryIntegrationTest;
 
 public class LoggerExtension implements TestWatcher {
 

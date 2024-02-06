@@ -32,14 +32,14 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public CategoryDTO getByName(String name) {
-    return mapper.ToDTO(repository.findByName(name)
-            .orElseThrow(() -> new CategoryNotFoundException(ExceptionMessagesEnum.CATEGORY_BY_NAME_NOT_FOUND.getMessage(), name)));
+    return repository.findByName(name).map(mapper::ToDTO)
+            .orElseThrow(() -> new CategoryNotFoundException(name));
   }
 
   @Override
   public CategoryDTO getById(Long id) {
-    return mapper.ToDTO(repository.findById(id)
-            .orElseThrow(() -> new CategoryNotFoundException(ExceptionMessagesEnum.CATEGORY_ID_NOT_FOUND.getMessage(), id)));
+    return repository.findById(id).map(mapper::ToDTO)
+            .orElseThrow(() -> new CategoryNotFoundException(id));
   }
 
   @Override
