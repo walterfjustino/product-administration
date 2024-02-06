@@ -1,9 +1,12 @@
 package br.com.api.productadministration.categories.services;
 
 
+import br.com.api.productadministration.categories.enums.ExceptionMessagesEnum;
+import br.com.api.productadministration.categories.exceptions.CategoryNotFoundException;
 import br.com.api.productadministration.categories.mapper.CategoryMapper;
 import br.com.api.productadministration.categories.model.dto.CategoryDTO;
 import br.com.api.productadministration.categories.repositories.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,14 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public CategoryDTO getByName(String name) {
-    return null;
+    return mapper.ToDTO(repository.findByName(name)
+            .orElseThrow(() -> new CategoryNotFoundException(ExceptionMessagesEnum.CATEGORY_BY_NAME_NOT_FOUND.getMessage(), name)));
+  }
+
+  @Override
+  public CategoryDTO getById(Long id) {
+    return mapper.ToDTO(repository.findById(id)
+            .orElseThrow(() -> new CategoryNotFoundException(ExceptionMessagesEnum.CATEGORY_ID_NOT_FOUND.getMessage(), id)));
   }
 
   @Override
@@ -42,13 +52,12 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public CategoryDTO update(CategoryDTO categoryDTO) {
-    return null;
+
+    return mapper.ToDTO(repository.save(mapper.ToModel(categoryDTO)));
   }
 
   @Override
   public void delete(Long id) {
-
+    repository.deleteById(id);
   }
-
-
 }

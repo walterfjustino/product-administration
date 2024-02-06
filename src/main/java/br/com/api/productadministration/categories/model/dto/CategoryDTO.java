@@ -1,11 +1,9 @@
 package br.com.api.productadministration.categories.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 
-@Builder
+
 public record CategoryDTO(
         Long id,
         @NotNull
@@ -46,6 +44,5 @@ public record CategoryDTO(
     public CategoryDTO build () {
       return new CategoryDTO(id, name, active, type);
     }
-
   }
 }

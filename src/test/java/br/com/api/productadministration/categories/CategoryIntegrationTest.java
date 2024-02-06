@@ -38,9 +38,6 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 public class CategoryIntegrationTest {
   private static final String scenariosPath = "scenarios/categoryEndpoint.yml";
 
-  @LocalServerPort
-  private int randomPort;
-
   @Container
   @ServiceConnection
   static PostgreSQLContainer<?> postgres =
