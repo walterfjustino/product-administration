@@ -2,6 +2,7 @@ package br.com.api.productadministration.categories.controllers;
 
 
 import br.com.api.productadministration.categories.model.dto.CategoryDTO;
+import br.com.api.productadministration.categories.services.CategoryService;
 import br.com.api.productadministration.categories.services.CategoryServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -10,14 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -26,7 +30,7 @@ import java.util.List;
 public class CategoryController {
 
   @Autowired
-  private CategoryServiceImpl service;
+  private CategoryService service;
 
   @PostMapping
   public ResponseEntity<CategoryDTO> create(@RequestBody @Valid CategoryDTO categoryDTO) {
@@ -46,6 +50,15 @@ public class CategoryController {
   @GetMapping("/all")
   public ResponseEntity<List<CategoryDTO>> getAll(){
     return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.update(id, categoryDTO));
+  }
+  @PatchMapping("/{id}")
+  public ResponseEntity<CategoryDTO> updatePartial(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.updatePartial(id, fields));
   }
 
   @DeleteMapping("/{id}")

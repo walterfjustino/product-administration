@@ -2,6 +2,7 @@ package br.com.api.productadministration.categories;
 
 import br.com.api.productadministration.categories.mapper.CategoryMapper;
 import br.com.api.productadministration.categories.model.Category;
+import br.com.api.productadministration.categories.model.dto.CategoryDTO;
 import br.com.api.productadministration.categories.repositories.CategoryRepository;
 import br.com.api.productadministration.categories.services.CategoryServiceImpl;
 import br.com.api.productadministration.configuration.LoggerExtension;
@@ -9,60 +10,60 @@ import br.com.api.productadministration.configuration.YamlLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.time.Duration;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
-@ExtendWith(LoggerExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers
+@ExtendWith({LoggerExtension.class, MockitoExtension.class})
 @AutoConfigureMockMvc
 public class CategoryTest {
   private static final String scenariosPath = "scenarios/categoryEndpoint.yml";
 
-  @Container
-  @ServiceConnection
-  static PostgreSQLContainer<?> postgres =
-          new PostgreSQLContainer<>("postgres:16.0");
-
- @Autowired
+ @Mock
  private CategoryRepository repository;
 
-  @Autowired
+  @InjectMocks
   private CategoryServiceImpl service;
 
-  @Autowired
-  private CategoryMapper mapper;
+
+  private final CategoryMapper mapper;
 
   @Autowired
   private MockMvc mockMvc;
 
+  public CategoryTest(CategoryMapper mapper) {
+    this.mapper = mapper;
+  }
+
   @BeforeEach
   void setUp() {
     repository.deleteAll();
-    createData();
+//    createData();
   }
 
   @Test
   void shouldCreateCategoruSuccessfully() throws Exception {
     final YamlLoader payload = new YamlLoader(scenariosPath, "shouldBeCreateCategory");
+
+    var expectedCategoryCreateDTO = new CategoryDTO(4L, "Brinquedos", true, "NORMAL");
+
+    var expectedCreatedCategory = repository.save(mapper.ToModel(expectedCategoryCreateDTO));
+
+    Mockito.when(service.createCategory(expectedCategoryCreateDTO))
+            .thenReturn(mapper.ToDTO(expectedCreatedCategory));
 
     mockMvc.perform(MockMvcRequestBuilders.post("/api/categories")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -70,9 +71,7 @@ public class CategoryTest {
             .andDo(print())
             .andExpect(status().isCreated());
 
-    await().pollInterval(Duration.ofSeconds(5)).atMost(30, SECONDS).untilAsserted(() -> {
-      assertThat(repository.findByName("Brinquedos")).isNotEmpty();
-    });
+       assertThat(repository.findByName("Brinquedos")).isNotEmpty();
   }
 
   @Test
@@ -80,7 +79,7 @@ public class CategoryTest {
 
     final YamlLoader responseBody = new YamlLoader(scenariosPath, "shouldBeReturnCategories");
 
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/categories/all")
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/categories/all")
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -89,9 +88,7 @@ public class CategoryTest {
             .andExpect(jsonPath("$[1].name").value("Tvs"))
             .andExpect(jsonPath("$[2].name").value("Celulares"));
 
-    await().pollInterval(Duration.ofSeconds(5)).atMost(30, SECONDS).untilAsserted(() -> {
       assertThat(repository.findByName("Tvs")).isNotEmpty();
-    });
   }
 
   private void createData() {

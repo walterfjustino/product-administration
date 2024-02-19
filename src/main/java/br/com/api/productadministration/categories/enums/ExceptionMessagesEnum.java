@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 public enum ExceptionMessagesEnum {
 
   CATEGORY_ID_NOT_FOUND(404001, "Category not found for the category id: %s informed", HttpStatus.NOT_FOUND),
-  CATEGORY_BY_NAME_NOT_FOUND(404002, "Category not found for the category name: %s informed", HttpStatus.NOT_FOUND);
+  CATEGORY_BY_NAME_NOT_FOUND(404002, "Category not found for the category name: %s informed", HttpStatus.NOT_FOUND),
+  CATEGORY_ID_INFORMED_IS_NOT_THE_SAME_REGISTERED(404003, "Category id: %s is not the same as the registered id: %s ", HttpStatus.NOT_FOUND);
 
   private final Integer code;
   private final String message;
