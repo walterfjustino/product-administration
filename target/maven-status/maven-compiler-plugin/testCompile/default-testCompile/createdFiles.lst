@@ -1,4 +1,5 @@
-br/com/api/productadministration/categories/CategoryIntegrationTest.class
-br/com/api/productadministration/TestContainersConfig.class
-br/com/api/productadministration/TestApplication.class
-br/com/api/productadministration/ProductAdministrationApplicationTests.class
+br/com/api/productadministration/configuration/TestContainersConfig.class
+br/com/api/productadministration/categories/CategoryTest.class
+br/com/api/productadministration/configuration/ProductAdministrationApplicationTests.class
+br/com/api/productadministration/configuration/YamlLoader.class
+br/com/api/productadministration/configuration/TestApplication.class

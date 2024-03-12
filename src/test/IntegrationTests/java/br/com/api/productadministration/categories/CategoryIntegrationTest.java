@@ -1,14 +1,12 @@
 package br.com.api.productadministration.categories;
 
-import br.com.api.productadministration.categories.mapper.CategoryMapper;
+import br.com.api.productadministration.categories.mapper.MapperToDTO;
 import br.com.api.productadministration.categories.model.Category;
 import br.com.api.productadministration.categories.repositories.CategoryRepository;
 import br.com.api.productadministration.categories.services.CategoryServiceImpl;
-import br.com.api.productadministration.configuration.LoggerExtension;
 import br.com.api.productadministration.configuration.YamlLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
-@ExtendWith(LoggerExtension.class)
+//@ExtendWith(LoggerExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @AutoConfigureMockMvc
@@ -49,7 +47,7 @@ public class CategoryIntegrationTest {
   private CategoryServiceImpl service;
 
   @Autowired
-  private CategoryMapper mapper;
+  private MapperToDTO mapper;
 
   @Autowired
   private MockMvc mockMvc;
@@ -95,21 +93,21 @@ public class CategoryIntegrationTest {
   }
 
   private void createData() {
-    service.createCategory(mapper.ToDTO(
+    service.createCategory(mapper.apply(
             new Category().builder()
                     .id(1L)
                       .name("Monitores")
                         .type("NORMAL")
                         .active(true)
                           .build()));
-    service.createCategory(mapper.ToDTO(
+    service.createCategory(mapper.apply(
             new Category().builder()
                     .id(2L)
                       .name("Tvs")
                         .type("NORMAL")
                           .active(true)
                             .build()));
-    service.createCategory(mapper.ToDTO(
+    service.createCategory(mapper.apply(
             new Category().builder()
                     .id(3L)
                       .name("Celulares")

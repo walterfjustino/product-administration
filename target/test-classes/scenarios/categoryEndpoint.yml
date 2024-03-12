@@ -1,4 +1,11 @@
-shouldBeCreateCategory:
+shouldBeCreateCategoryWithRequestBody:
+  input: >-
+    {
+        "name": "Brinquedos",
+        "active": true,
+        "type": "NORMAL"
+    }
+shouldBeCreatedCategoryWithResponseBody:
   input: >-
     {
         "id": 4,

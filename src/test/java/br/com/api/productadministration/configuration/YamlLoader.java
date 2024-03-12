@@ -3,10 +3,6 @@ package br.com.api.productadministration.configuration;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public class YamlLoader {
 
   private final YamlPropertiesFactoryBean yaml;

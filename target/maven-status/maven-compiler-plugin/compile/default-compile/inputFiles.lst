@@ -1,8 +1,14 @@
 /home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/repositories/CategoryRepository.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/exceptions/CategoryNotFoundExceptionIsNotTheSame.java
 /home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/model/dto/CategoryDTO.java
 /home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/controllers/CategoryController.java
 /home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/model/Category.java
-/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/mapper/CategoryMapper.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/mapper/MapperToDTO.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/handler/GlobalExceptionHandler.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/mapper/MapperToModel.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/exceptions/CategoryNotFoundException.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/handler/error/ErrorResponse.java
+/home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/enums/ExceptionMessagesEnum.java
 /home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/services/CategoryServiceImpl.java
 /home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/ProductAdministrationApplication.java
 /home/walter/Documentos/projects/product-administration/src/main/java/br/com/api/productadministration/categories/services/CategoryService.java

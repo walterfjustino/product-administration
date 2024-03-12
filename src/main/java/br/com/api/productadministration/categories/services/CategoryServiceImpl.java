@@ -2,8 +2,8 @@ package br.com.api.productadministration.categories.services;
 
 
 import br.com.api.productadministration.categories.exceptions.CategoryNotFoundException;
-import br.com.api.productadministration.categories.exceptions.CategoryNotFoundExceptionIsNotTheSame;
-import br.com.api.productadministration.categories.mapper.CategoryMapper;
+import br.com.api.productadministration.categories.mapper.MapperToDTO;
+import br.com.api.productadministration.categories.mapper.MapperToModel;
 import br.com.api.productadministration.categories.model.Category;
 import br.com.api.productadministration.categories.model.dto.CategoryDTO;
 import br.com.api.productadministration.categories.repositories.CategoryRepository;
@@ -14,52 +14,53 @@ import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CategoryServiceImpl implements CategoryService {
 
   @Autowired
-  private CategoryMapper mapper;
-
-  @Autowired
   private CategoryRepository repository;
+  @Autowired
+  private MapperToDTO mapperToDTO;
+  @Autowired
+  private MapperToModel mapperToModel;
 
   @Override
   @Transactional
   public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-    return mapper.ToDTO(repository.save(mapper.ToModel(categoryDTO)));
+    Category entityToSave = mapperToModel.apply(categoryDTO);
+    Category entitySaved = repository.save(entityToSave);
+    CategoryDTO dto = mapperToDTO.apply(entitySaved);
+    return dto;
   }
 
   @Override
   public CategoryDTO getByName(String name) {
     return repository.findByName(name)
-            .map(mapper::ToDTO)
+            .map(mapperToDTO)
             .orElseThrow(() -> new CategoryNotFoundException(name));
   }
 
 //  @Override
 //  public CategoryDTO getById(Long id) {
 //    return repository.findById(id)
-//            .map(mapper::ToDTO)
+//            .map(mapperToDTO)
 //            .orElseThrow(() -> new CategoryNotFoundException(id));
 //  }
 
   @Override
   public CategoryDTO getById(Long id) {
-    return mapper.ToDTO(repository.getReferenceById(id));
+    return mapperToDTO.apply(repository.getReferenceById(id));
   }
 
   @Override
   public List<CategoryDTO> getAll() {
     return repository.findAll()
             .stream()
-            .map(obj -> mapper.ToDTO(obj))
+            .map(mapperToDTO)
             .toList();
   }
 
@@ -73,18 +74,18 @@ public class CategoryServiceImpl implements CategoryService {
             return obj;
             })
             .orElseThrow(() -> new CategoryNotFoundException(id));
-     return mapper.ToDTO(repository.save(foundCategory));
+     return mapperToDTO.apply(repository.save(foundCategory));
   }
 
   @Override
   public CategoryDTO updatePartial(Long id, Map<String, Object> fields) {
-    var foundCategory = mapper.ToModel(getById(id));
+    var foundCategory = mapperToModel.apply(getById(id));
     fields.forEach((key, value) -> {
       Field fieldKey = ReflectionUtils.findRequiredField(Category.class, key);
       fieldKey.setAccessible(true);
       ReflectionUtils.setField(fieldKey, foundCategory, value);
     });
-    return mapper.ToDTO(repository.save(foundCategory));
+    return mapperToDTO.apply(repository.save(foundCategory));
   }
 
   @Override

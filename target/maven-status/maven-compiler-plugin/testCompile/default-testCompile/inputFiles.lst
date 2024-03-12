@@ -1,4 +1,6 @@
-/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/TestContainersConfig.java
-/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/TestApplication.java
-/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/ProductAdministrationApplicationTests.java
-/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/categories/CategoryIntegrationTest.java
+/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/configuration/TestContainersConfig.java
+/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/configuration/YamlLoader.java
+/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/configuration/ProductAdministrationApplicationTests.java
+/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/categories/CategoryTest.java
+/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/configuration/LoggerExtension.java
+/home/walter/Documentos/projects/product-administration/src/test/java/br/com/api/productadministration/configuration/TestApplication.java
